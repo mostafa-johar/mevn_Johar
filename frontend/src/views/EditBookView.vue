@@ -10,7 +10,8 @@ const slugParam = route.params.slug
 const router = useRouter()
 
 // Variables
-const baseUrl = ref<string>(`http://localhost:5000/api/books/${slugParam}`)
+const serverURL = ref(import.meta.env.SERVER_URL) 
+const baseUrl = ref<string>(`${serverURL}/api/books/${slugParam}`)
 const bookId = ref<string>('')
 const title = ref<string>('')
 const slug = ref<string>('')
@@ -87,7 +88,7 @@ const updateBook = () => {
         formatData.append('thumbnail', thumbnail.value)
     }
 
-    fetch('http://localhost:5000/api/books', {
+    fetch(`${serverURL}/api/books`, {
         method: "PUT",
         body: formatData
 
@@ -113,7 +114,7 @@ const updateBook = () => {
 const deleteBook = async () => {
 
     try {
-        const response = await fetch(`http://localhost:5000/api/books/${bookId.value}`, {
+        const response = await fetch(`${serverURL}/api/books/${bookId.value}`, {
             method: 'DELETE'
         })
 

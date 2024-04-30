@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-
+    
+const serverURL = ref(import.meta.env.SERVER_URL) 
 const title = ref<string>('')
 const slug = ref<string>('')
 const stars = ref<any>()
 const description = ref<string>('')
 const CategoriesComma = ref()
-const image = ref<string>(`http://localhost:5000/uploads/no-image-selected.jpg`);
+const image = ref<string>(`${serverURL.value}/uploads/no-image-selected.jpg`);
 const thumbnail = ref<string>('')
 
 const onChangeCategory = (e: any) => {
@@ -34,7 +35,7 @@ function PostData() {
     formatData.append('category', CategoriesComma.value)
     formatData.append('thumbnail', thumbnail.value)
 
-    fetch('http://localhost:5000/api/books', {
+    fetch(`${serverURL.value}/api/books`, {
         method: "post",
         body: formatData
 

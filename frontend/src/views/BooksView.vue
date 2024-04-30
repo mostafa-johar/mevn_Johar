@@ -6,7 +6,8 @@ import { ref, computed } from 'vue';
 const val = ref<boolean>(true)
 const loading = ref<boolean>(true)
 const books = ref<any>([])
-const baseURL = ref<string>('http://localhost:5000/api/books')
+const serverURL = ref(import.meta.env.SERVER_URL) 
+const baseURL = ref<string>(`${serverURL.value}/api/books`)
 const selectCategory = ref<string>('')
 const error = ref<string>('')
 
@@ -83,7 +84,7 @@ const filterBooks = computed(() => {
             <!-- data -->
             <div class="box_card" v-for="book in filterBooks" :key="book._id" v-else>
                 <div class="img_box">
-                    <img :src="`http://localhost:5000/uploads/${book.thumbnail}`" :alt="book.title">
+                    <img :src="`${serverURL}/uploads/${book.thumbnail}`" :alt="book.title">
                 </div>
                 <router-link :to="`book/${book.slug}`">{{ book.title }}</router-link>
             </div>

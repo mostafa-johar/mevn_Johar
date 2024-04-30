@@ -11,7 +11,7 @@ const router = useRouter()
 
 // Variables
 const serverURL = ref(import.meta.env.SERVER_URL) 
-const baseUrl = ref<string>(`${serverURL}/api/books/${slugParam}`)
+const baseUrl = ref<string>(`${serverURL.value}/api/books/${slugParam}`)
 const bookId = ref<string>('')
 const title = ref<string>('')
 const slug = ref<string>('')
@@ -61,7 +61,7 @@ async function fetchData() {
         stars.value = data.stars;
         CategoriesComma.value = data.category;
         thumbnail.value = data.thumbnail
-        image.value = `http://localhost:5000/uploads/${thumbnail.value}`
+        image.value = `${serverURL.value}/uploads/${thumbnail.value}`
 
     }
     catch (error) {
@@ -88,7 +88,7 @@ const updateBook = () => {
         formatData.append('thumbnail', thumbnail.value)
     }
 
-    fetch(`${serverURL}/api/books`, {
+    fetch(`${serverURL.value}/api/books`, {
         method: "PUT",
         body: formatData
 
@@ -114,7 +114,7 @@ const updateBook = () => {
 const deleteBook = async () => {
 
     try {
-        const response = await fetch(`${serverURL}/api/books/${bookId.value}`, {
+        const response = await fetch(`${serverURL.value}/api/books/${bookId.value}`, {
             method: 'DELETE'
         })
 

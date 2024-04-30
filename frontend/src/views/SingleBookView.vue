@@ -6,6 +6,7 @@ import { useRoute } from 'vue-router';
 const book = ref<any>({})
 const route = useRoute()
 const { slug } = route.params
+const serverURL = ref(import.meta.env.SERVER_URL) 
 
 /*============================
 -- Fetch Data
@@ -14,7 +15,7 @@ const { slug } = route.params
 // get data form backend
 async function getData() {
     try {
-        const response = await fetch(`http://localhost:5000/api/books/${slug}`)
+        const response = await fetch(${serverURL.value}/api/books/${slug}`)
         if (!response.ok) {
             throw new Error('Faild to fetch data')
         }
@@ -36,7 +37,7 @@ getData()
         <section class="detailBook">
             <!-- col-1 left -->
             <div class="img_box">
-                <img :src="`http://localhost:5000/uploads/${book.thumbnail}`" :alt="book.title" loading="lazy">
+                <img :src="`${serverURL}/${book.thumbnail}`" :alt="book.title" loading="lazy">
                 <router-link :to="`/editBook/${book.slug}`">➕edit</router-link>
             </div>
 

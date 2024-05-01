@@ -3,14 +3,13 @@
 import { ref, computed } from 'vue';
 
 // variables
-// const serverURL= ref(import.meta.env.SERVER_URL)
 const val = ref<boolean>(true)
 const loading = ref<boolean>(true)
 const books = ref<any>([])
-const baseURL = ref<string>('http://localhost:5000/api/books')
+const serv = ref(import.meta.env.VITE_API_URL)
+const baseURL = ref(`${serv.value}/api/books`)
 const selectCategory = ref<string>('')
 const error = ref<string>('')
-
 
 /*============================
 -- Fetch Data

@@ -10,7 +10,8 @@ const slugParam = route.params.slug
 const router = useRouter()
 
 // Variables
-const baseUrl = ref<string>(`http://localhost:5000/api/books/${slugParam}`)
+const serv = ref(import.meta.env.VITE_API_URL)
+const baseURL = ref(`${serv.value}/api/books`)
 const bookId = ref<string>('')
 const title = ref<string>('')
 const slug = ref<string>('')
@@ -49,7 +50,7 @@ const onImageChange = (e: any) => {
 async function fetchData() {
 
     try {
-        const response = await fetch(baseUrl.value)
+        const response = await fetch(`${baseURL.value}/${slugParam}`)
         const data = await response.json()
 
         // updata inputs
@@ -60,7 +61,7 @@ async function fetchData() {
         stars.value = data.stars;
         CategoriesComma.value = data.category;
         thumbnail.value = data.thumbnail
-        image.value = `http://localhost:5000/uploads/${thumbnail.value}`
+        image.value = `${serv.value}/uploads/${thumbnail.value}`
 
     }
     catch (error) {
@@ -87,7 +88,7 @@ const updateBook = () => {
         formatData.append('thumbnail', thumbnail.value)
     }
 
-    fetch('http://localhost:5000/api/books', {
+    fetch(baseURL.value, {
         method: "PUT",
         body: formatData
 
@@ -113,7 +114,7 @@ const updateBook = () => {
 const deleteBook = async () => {
 
     try {
-        const response = await fetch(`http://localhost:5000/api/books/${bookId.value}`, {
+        const response = await fetch(`${baseURL.value}/${bookId.value}`, {
             method: 'DELETE'
         })
 

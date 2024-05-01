@@ -1,13 +1,24 @@
+<!-- eslint-disable @typescript-eslint/no-unused-vars -->
 <script setup lang="ts">
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 
+// to redirct 
+const router = useRouter()
+const serv = ref(import.meta.env.VITE_API_URL)
+const baseURL = ref(`${serv.value}/api/books`)
 const title = ref<string>('')
 const slug = ref<string>('')
 const stars = ref<any>()
 const description = ref<string>('')
 const CategoriesComma = ref()
-const image = ref<string>(`http://localhost:5000/uploads/no-image-selected.jpg`);
+const image = ref<string>(`${serv.value}/uploads/no-image-selected.jpg`);
 const thumbnail = ref<string>('')
+
+// Function redirect 
+const redirect = (route: string) => {
+    router.push(route)
+}
 
 const onChangeCategory = (e: any) => {
     CategoriesComma.value = e.target.value.split(',').map((cate: string) => cate.trim())
@@ -34,13 +45,13 @@ function PostData() {
     formatData.append('category', CategoriesComma.value)
     formatData.append('thumbnail', thumbnail.value)
 
-    fetch('http://localhost:5000/api/books', {
+    fetch(baseURL.value, {
         method: "post",
         body: formatData
 
     })
         .then(response => {
-            console.log(response)
+            redirect('/books')
         })
         .catch(error => {
             console.log(error)

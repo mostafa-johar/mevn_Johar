@@ -3,6 +3,7 @@
 import { ref, computed } from 'vue';
 
 // variables
+// const serverURL= ref(import.meta.env.SERVER_URL)
 const val = ref<boolean>(true)
 const loading = ref<boolean>(true)
 const books = ref<any>([])
